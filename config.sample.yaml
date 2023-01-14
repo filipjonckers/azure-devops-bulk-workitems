@@ -1,0 +1,4 @@
+organization: 'myAzureOrganization'
+project: 'MyProjectName'
+url: 'https://dev.azure.com/myAzureOrganization'
+token: 'myPersonalAccessToken'

@@ -1,0 +1,3 @@
+PyYAML>=6.0
+azure-devops
+msrest>=0.7.1
