@@ -1,3 +1,7 @@
+![GitHub top language](https://img.shields.io/github/languages/top/filipjonckers/azure-devops-bulk-workitems?style=flat-square)
+![GitHub](https://img.shields.io/github/license/filipjonckers/azure-devops-bulk-workitems?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/filipjonckers/azure-devops-bulk-workitems?style=flat-square)
+
 # azure-devops-bulk-workitems
 
 Create new workitems from a pre-defined list and assign them to a specific sprint.
@@ -23,9 +27,11 @@ token: 'myPersonalAccessToken'
 
 ## workitems.yaml file
 
-This file contains details for each work item that will be created. Multiple YAML documents can be put in this file, each delimited by **---** (three dashes).
+This file contains details for each work item that will be created. Multiple YAML documents can be put in this file,
+each delimited by **---** (three dashes).
 
 The following fields are currently supported:
+
 - type: work item type
 - title
 - assigned: assigned to
