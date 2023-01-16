@@ -1,22 +1,16 @@
 type: Issue
 title: test 1
-area: myArea
-iteration: myArea\2301
 assigned: John Doe
 description: test item 1
 ---
 type: Issue
 title: test 2 multiple lines
-area: myArea
-iteration: myArea\2301
 description: line 1 in item 2<div>
   line 2 in item 2<div>
   line 3 in item 2
 ---
 type: Issue
 title: test 3
-area: myArea
-iteration: myArea\2301
 description: test item 3
 tasks:
   - Write release note

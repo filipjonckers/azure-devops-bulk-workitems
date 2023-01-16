@@ -35,6 +35,8 @@ if __name__ == '__main__':
         organization_url = config['url']
         config_organization = config['organization']
         config_project = config['project']
+        config_area = config['area']
+        config_iteration = config['iteration']
     except KeyError:
         print("Error: missing item in configuration file")
         exit(1)
@@ -60,8 +62,6 @@ if __name__ == '__main__':
             work_item_type = doc.get('type')
             title = doc.get('title')
             assigned = doc.get('assigned')
-            area = doc.get('area')
-            iteration = doc.get('iteration')
             description = doc.get('description')
             tasks = doc.get('tasks')
 
@@ -78,10 +78,10 @@ if __name__ == '__main__':
                 patch_document.append(get_patch_oper('add', 'System.Title', title.strip()))
             if description is not None:
                 patch_document.append(get_patch_oper('add', 'System.Description', description))
-            if area is not None:
-                patch_document.append(get_patch_oper('add', 'System.AreaPath', area.strip()))
-            if iteration is not None:
-                patch_document.append(get_patch_oper('add', 'System.IterationPath', iteration.strip()))
+            if config_area is not None:
+                patch_document.append(get_patch_oper('add', 'System.AreaPath', config_area.strip()))
+            if config_iteration is not None:
+                patch_document.append(get_patch_oper('add', 'System.IterationPath', config_iteration.strip()))
             if assigned is not None:
                 patch_document.append(get_patch_oper('add', 'System.AssignedTo', assigned.strip()))
 
@@ -99,10 +99,10 @@ if __name__ == '__main__':
                     print(f"    --> task: {task}")
                     # prepare payload for subtask
                     task_document = [get_patch_oper('add', 'System.Title', task.strip())]
-                    if area is not None:
-                        task_document.append(get_patch_oper('add', 'System.AreaPath', area.strip()))
-                    if iteration is not None:
-                        task_document.append(get_patch_oper('add', 'System.IterationPath', iteration.strip()))
+                    if config_area is not None:
+                        task_document.append(get_patch_oper('add', 'System.AreaPath', config_area.strip()))
+                    if config_iteration is not None:
+                        task_document.append(get_patch_oper('add', 'System.IterationPath', config_iteration.strip()))
                     # link parent
                     task_document.append(get_link_patch_oper('add', item))
                     # create task, linked to parent
