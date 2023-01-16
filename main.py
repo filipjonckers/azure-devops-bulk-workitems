@@ -6,7 +6,7 @@ from msrest.authentication import BasicAuthentication
 SIMULATION_ONLY = False
 
 
-def _create_patch_operation(op, path, value):
+def get_patch_operation(op, path, value):
     patch_operation = JsonPatchOperation()
     patch_operation.op = op
     patch_operation.path = path
@@ -16,7 +16,13 @@ def _create_patch_operation(op, path, value):
 
 def get_patch_oper(op, field, value):
     path = '/fields/{field}'.format(field=field)
-    return _create_patch_operation(op=op, path=path, value=value)
+    return get_patch_operation(op=op, path=path, value=value)
+
+
+def get_link_patch_oper(op, parent_item):
+    value = {"rel": "System.LinkTypes.Hierarchy-Reverse",
+             "url": parent_item.url}
+    return get_patch_operation(op=op, path='/relations/-', value=value)
 
 
 if __name__ == '__main__':
@@ -57,6 +63,7 @@ if __name__ == '__main__':
             area = doc.get('area')
             iteration = doc.get('iteration')
             description = doc.get('description')
+            tasks = doc.get('tasks')
 
             print(f"-> Creating: [{work_item_type}] {title}")
 
@@ -79,10 +86,30 @@ if __name__ == '__main__':
                 patch_document.append(get_patch_oper('add', 'System.AssignedTo', assigned.strip()))
 
             # create new work item
-            client.create_work_item(patch_document,
-                                    config_project,
-                                    work_item_type,
-                                    validate_only=SIMULATION_ONLY,
-                                    bypass_rules=False,
-                                    suppress_notifications=True,
-                                    expand=None)
+            item = client.create_work_item(patch_document,
+                                           config_project,
+                                           work_item_type,
+                                           validate_only=SIMULATION_ONLY,
+                                           bypass_rules=False,
+                                           suppress_notifications=True,
+                                           expand=None)
+
+            if tasks is not None:
+                for task in tasks:
+                    print(f"    --> task: {task}")
+                    # prepare payload for subtask
+                    task_document = [get_patch_oper('add', 'System.Title', task.strip())]
+                    if area is not None:
+                        task_document.append(get_patch_oper('add', 'System.AreaPath', area.strip()))
+                    if iteration is not None:
+                        task_document.append(get_patch_oper('add', 'System.IterationPath', iteration.strip()))
+                    # link parent
+                    task_document.append(get_link_patch_oper('add', item))
+                    # create task, linked to parent
+                    task_item = client.create_work_item(task_document,
+                                                        config_project,
+                                                        "Task",
+                                                        validate_only=SIMULATION_ONLY,
+                                                        bypass_rules=False,
+                                                        suppress_notifications=True,
+                                                        expand=None)
