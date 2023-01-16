@@ -18,3 +18,7 @@ title: test 3
 area: myArea
 iteration: myArea\2301
 description: test item 3
+tasks:
+  - Write release note
+  - Write test book
+  - Send release note
