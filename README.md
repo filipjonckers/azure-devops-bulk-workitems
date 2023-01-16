@@ -29,6 +29,7 @@ token: 'myPersonalAccessToken'
 
 This file contains details for each work item that will be created. Multiple YAML documents can be put in this file,
 each delimited by **---** (three dashes).
+Optional Subtasks will be created and linked to a work item if specified.  The subtasks will use the same area and iteration but will not be assigned to anyone.
 
 The following fields are currently supported:
 
@@ -38,6 +39,7 @@ The following fields are currently supported:
 - area
 - iteration
 - description (supports formatting such as \<div\> for new line)
+- tasks (creates linked Task work items with inherited area and iteration)
 
 ```yaml
 type: Issue
@@ -60,4 +62,8 @@ title: test 3
 area: myArea
 iteration: myArea\2301
 description: test item 3
+tasks:
+  - Write release note
+  - Write test book
+  - Send release note
 ```
