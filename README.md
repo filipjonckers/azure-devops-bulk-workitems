@@ -16,6 +16,8 @@ Create new workitems from a pre-defined list and assign them to a specific sprin
 
 This file contains the general configuration parameters used to connect to your Azure DevOps environment.
 
+It also (optionally) contains the Area and Iteration which will be assigned to every work item.
+
 Make sure you get a personal access token first!
 
 ```yaml
@@ -23,6 +25,8 @@ organization: 'myAzureOrganization'
 project: 'MyProjectName'
 url: 'https://dev.azure.com/myAzureOrganization'
 token: 'myPersonalAccessToken'
+area: 'myArea'
+iteration: 'iteration\sprint'
 ```
 
 ## workitems.yaml file
@@ -36,31 +40,23 @@ The following fields are currently supported:
 - type: work item type
 - title
 - assigned: assigned to
-- area
-- iteration
 - description (supports formatting such as \<div\> for new line)
 - tasks (creates linked Task work items with inherited area and iteration)
 
 ```yaml
 type: Issue
 title: test 1
-area: myArea
-iteration: myArea\2301
 assigned: John Doe
 description: test item 1
 ---
 type: Issue
 title: test 2 multiple lines
-area: myArea
-iteration: myArea\2301
 description: line 1 in item 2<div>
   line 2 in item 2<div>
   line 3 in item 2
 ---
 type: Issue
 title: test 3
-area: myArea
-iteration: myArea\2301
 description: test item 3
 tasks:
   - Write release note
